@@ -18,8 +18,7 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml"> 
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    
        
 
     <!-- Semantic UI CSS via CDN -->
@@ -33,15 +32,19 @@
 
     <%= javascript_importmap_tags %> 
 
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+
   </head>
 
   <body>
     <div class="ui large inverted menu">
-      <div class="ui container">
+      <div class="ui container">        
         <%= render "layouts/navigation"%>
       </div>
     </div>
     <div class="ui container">
+      <%= render "layouts/messages"%>
       <%= yield %>
     </div>  
   </body>
