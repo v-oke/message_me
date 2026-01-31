@@ -6,20 +6,23 @@
 <div class="ui two column grid">
     <div class="twelve wide column">
         <div class="ui fluid raised card chatbox">
-            <div class="content">
-                <div class="ui feed">
+            <div class="content" id="chatroom-messages" data-controller="auto-scroll" data-auto-scroll-target="messages">
+                <div class="ui feed" id="messages"  
+                      style="max-height: 400px; overflow-y: auto;">
                     <%= render @messages %>
                 </div>
             </div>
             <div class="extra content">
-                <%= form_with model: @message, local: true, html: { class: "ui reply form" }, data: { turbo: false } do |f| %>
-                    <div class="field">
-                        <div class="ui fluid icon input">
-                            <%= f.text_field :body, placeholder: "Enter message ..." %>
-                            <%= f.button '<i class="bordered inverted red edit icon"></i>'.html_safe %>
-                        </div>
-                    </div>                    
-                <% end %>
+            <%= form_with model: @message,
+              url: messages_path,
+              html: { class: "ui reply form", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } } do |f| %>
+                <div class="field">
+                    <div class="ui fluid icon input">
+                    <%= f.text_field :body, placeholder: "Enter message ..." %>
+                    <%= f.button '<i class="bordered inverted red edit icon"></i>'.html_safe %>
+                    </div>
+                </div>
+            <% end %>
             </div>        
         </div>
     </div>

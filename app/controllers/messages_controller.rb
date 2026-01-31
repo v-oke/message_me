@@ -4,11 +4,14 @@ class MessagesController < ApplicationController
   def create
     @message = current_user.messages.build(message_params)
     if @message.save
-      redirect_to root_path
-    # ActionCable.server.broadcast 'chatroom_channel',
-    # message: render_message(@message)
+      ActionCable.server.broadcast(
+      "chatroom_channel",
+      { html: render_to_string(partial: "messages/message", locals: { message: @message }) }
+    )
+    head :ok
     else
       flash[:error] = "Message cannot be blank"
+      redirect_to root_path
     end
   end
 
